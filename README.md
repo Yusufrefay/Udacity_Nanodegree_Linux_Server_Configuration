@@ -100,7 +100,7 @@ Project 3 : Linux server configuration
       * `sudo mkdir .ssh`
       * `sudo touch authorized_keys`
 
-      9.    Then copy the content of the key generated on the local machine to the autorized_keys file on the VM
+9.    Then copy the content of the key generated on the local machine to the autorized_keys file on the VM
 10.   Run `chmod 700 .ssh` on the VM
 11.   Run `chmod 644 .ssh/authorized_keys` on the VM
 12.   Run `chown -R grader:grader .ssh `on the VM
@@ -108,7 +108,9 @@ Project 3 : Linux server configuration
 14.   Then login to the VM machine through your local machine :
       * `ssh -i ~/.ssh/grader_key -p 2200 grader@52.59.221.156`
 
-
+### Change timezone to UTC
+1. Check the timezone with the `date` command. This will display the current timezone after the time.
+  If it's not UTC change it with this command: `sudo timedatectl set-timezone UTC`
 ## Install git and clone the catalog project
 1.    Install Apache web server:
       * `sudo apt-get install apache2`
@@ -116,6 +118,54 @@ Project 3 : Linux server configuration
       * `sudo apt-get install python-setuptools libapache2-mod-wsgi`
 3.    Restart apache server :
       * `sudo service apache2 restart`
+
+
+
+### Create a new PostgreSQL for catalog
+
+1. PostgreSQL creates a Linux user with the name `postgres` during installation; switch to this user by running sudo `su - postgres`.
+
+1. Connect to psql (the terminal for interacting with PostgreSQL) by running psql
+
+2. Create the catalog user by running `CREATE ROLE catalog WITH LOGIN;` (Make sure to enter `;` without which it may NOT understand the statement)
+
+3. Next, give the catalog user the ability to create databases: `ALTER ROLE catalog CREATEDB;` (Make sure to enter `;` without which it may NOT understand the statement)
+
+4. Finally, give the catalog user a password by running `\password catalog`
+
+5. Check to make sure the catalog user was created by running `\du`
+
+6. A table will come up showing all the roles added, check on `catalog role` if its able to `create DB`
+
+7. Exit psql by running `\q`
+
+8. Switch back to ubuntu user through `exit`
+
+## Create a Linux user called `catalog`
+
+1. Create a new Linux user called catalog:
+
+    * `sudo adduser catalog`
+    * fill out information for catalog
+
+2. Give the catalog user sudo permissions:
+
+    * run sudo visudo
+    * add catalog ALL=(ALL:ALL) ALL
+    * save and close the visudo file
+
+3. To verify that catalog has sudo permissions, login to catalog (run sudo su - catalog), and run `sudo -l`
+
+```
+ User catalog may run the following commands on
+ 	ip-XX-XX-XX-XX.ec2.internal:
+     (ALL : ALL) ALL
+```
+4. Create a database called catalog by running `createdb catalog`
+
+5. Run `psql` and from there run `\l` to see that the new database has been created
+
+6. Switch back to the ubuntu user by running `exit`
 #### Clone the app from GitHub:
 1.    Install git:
       * `sudo apt-get install git`
@@ -207,3 +257,4 @@ sudo apt-get install libpq-dev
 * [rrjoson Readme](https://github.com/rrjoson/udacity-linux-server-configuration/)
 * [stueken Readme](https://github.com/stueken/FSND-P5_Linux-Server-Configuration/)
 * [blurdylan Readme](https://github.com/blurdylan/linux-server-configuration/)
+* [ahmedheema95 Readme](https://github.com/ahmedheema95/Linux-Server-Configuration/blob/master/README.md)
