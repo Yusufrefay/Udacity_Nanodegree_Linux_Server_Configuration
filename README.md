@@ -147,7 +147,7 @@ Project 3 : Linux server configuration
 
     * `sudo adduser catalog`
     * fill out information for catalog
-
+    * password is 12345678
 2. Give the catalog user sudo permissions:
 
     * run sudo visudo
@@ -199,6 +199,7 @@ Project 3 : Linux server configuration
 `sudo apt-get install python-pip`
 `sudo apt-get install python-virtualenv`
 <ve> is the Virtual Environment
+pass is 12345678
 apt-get install python-psycopg2 python-flask
 apt-get install python-sqlalchemy python-pip //pip and sql alchemy
 pip install --upgrade oauth2client //oauth for login
@@ -208,6 +209,7 @@ pip install flask-seasurf
 sudo apt-get install libpq-dev
 
 ```
+
 
 ### Setup apache service
 1. Create a configuration file (`itemCatalog.conf`) in `/etc/apache2/sites-available/` type this into it:
